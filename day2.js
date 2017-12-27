@@ -36,7 +36,6 @@ for(var i = 0; i < arrayOfRows.length; i++) {
 }
 
 function findRange(highest, lowest) {
-    console.log("high: ", highest, "low: ", lowest);
     return highest - lowest;
 }
 
