@@ -1,0 +1,11 @@
+{
+  "name": "adventOfCode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:djm204/adventOfCode.git",
+  "author": "David Mendez <davidm@boldcommerce.com>",
+  "license": "MIT",
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
+}

@@ -16,12 +16,9 @@ var numbers = `278	1689	250	1512	1792	1974	175	1639	235	1635	1690	1947	810	224	9
 114	605	94	136	96	167	553	395	164	159	284	104	530	551	544	18`
 const ROW_LENGTH = 16;
 var arrayOfNumebrs = numbers.replace( /\n/g, "\t" ).split('\t');
-var arrayOfRows;
 var sumsArray =[];
 var highest = 0;
 var lowest = 0;
-
-arrayOfRows = chopNSlice(arrayOfNumebrs);
 
 Array.min = function( array ){
     return Math.min.apply( Math, array );
@@ -30,10 +27,6 @@ Array.min = function( array ){
 Array.max = function( array ){
     return Math.max.apply( Math, array );
 };
-
-for(var i = 0; i < arrayOfRows.length; i++) {
-    sumsArray.push(findRange(Array.max(arrayOfRows[i]), Array.min(arrayOfRows[i])))
-}
 
 function findRange(highest, lowest) {
     return highest - lowest;
@@ -59,3 +52,31 @@ function chopNSlice(arrayOfNumebrs) {
 function getSum(total, num) {
     return total + num;
 }
+
+function divideEvenly(num1, num2) {
+    if(num1 / num2 % 1 === 0) {
+        return num1 / num2;
+    }
+
+    if(num2 / num1 % 1 === 0) {
+       return num2 / num1;
+    }
+
+    return 0;
+}
+
+//Part One
+const arrayOfRows = chopNSlice(arrayOfNumebrs);
+
+for(var i = 0; i < arrayOfRows.length; i++) {
+    sumsArray.push(findRange(Array.max(arrayOfRows[i]), Array.min(arrayOfRows[i])))
+}
+
+//Part two
+sumsArray = [];
+
+for(var i = 0; i < arrayOfRows.length; i++) {
+    sumsArray.push(arrayOfRows[i].reduce(divideEvenly));
+}
+
+console.log(sumsArray);
