@@ -15,17 +15,18 @@ var numbers = `278	1689	250	1512	1792	1974	175	1639	235	1635	1690	1947	810	224	9
 149	4140	112	3748	148	815	4261	138	1422	2670	32	334	2029	4750	4472	2010
 114	605	94	136	96	167	553	395	164	159	284	104	530	551	544	18`
 const ROW_LENGTH = 16;
-var arrayOfNumebrs = numbers.replace( /\n/g, "\t" ).split('\t');
-var sumsArray =[];
+const _ = require('lodash');
+var arrayOfNumebrs = numbers.replace(/\n/g, "\t").split('\t');
+var sumsArray = [];
 var highest = 0;
 var lowest = 0;
 
-Array.min = function( array ){
-    return Math.min.apply( Math, array );
+Array.min = function (array) {
+    return Math.min.apply(Math, array);
 };
 
-Array.max = function( array ){
-    return Math.max.apply( Math, array );
+Array.max = function (array) {
+    return Math.max.apply(Math, array);
 };
 
 function findRange(highest, lowest) {
@@ -35,14 +36,14 @@ function findRange(highest, lowest) {
 function chopNSlice(arrayOfNumebrs) {
     var rowNumber = 0;
     var rows = [];
-    for(var i = 0; i < arrayOfNumebrs.length; i++) {
+    for (var i = 0; i < arrayOfNumebrs.length; i++) {
 
-        if(typeof rows[rowNumber] == 'undefined') {
+        if (typeof rows[rowNumber] == 'undefined') {
             rows[rowNumber] = [];
-        } 
+        }
         rows[rowNumber].push(arrayOfNumebrs[i]);
-        
-        if((i+1) % ROW_LENGTH === 0) {
+
+        if ((i + 1) % ROW_LENGTH === 0) {
             rowNumber++;
         }
     }
@@ -53,30 +54,30 @@ function getSum(total, num) {
     return total + num;
 }
 
-function divideEvenly(num1, num2) {
-    if(num1 / num2 % 1 === 0) {
-        return num1 / num2;
-    }
-
-    if(num2 / num1 % 1 === 0) {
-       return num2 / num1;
-    }
-
-    return 0;
-}
-
 //Part One
 const arrayOfRows = chopNSlice(arrayOfNumebrs);
 
-for(var i = 0; i < arrayOfRows.length; i++) {
+for (var i = 0; i < arrayOfRows.length; i++) {
     sumsArray.push(findRange(Array.max(arrayOfRows[i]), Array.min(arrayOfRows[i])))
 }
+
+console.log(sumsArray.reduce(getSum));
+
 
 //Part two
 sumsArray = [];
 
-for(var i = 0; i < arrayOfRows.length; i++) {
-    sumsArray.push(arrayOfRows[i].reduce(divideEvenly));
+for (var i = 0; i < arrayOfRows.length; i++) {
+    var row = arrayOfRows[i];
+    console.log('row', row);
+    for (var j = 0; j < row.length; j++) {
+        var innerValue = row[j];
+        var innerValIndex = j;
+        for (var k = 0; k < row.length; k++) {
+            if (innerValue % row[k] === 0 &&  k !== innerValIndex) {
+                sumsArray.push(innerValue / row[k]);
+            }
+        }
+    }
 }
-
-console.log(sumsArray);
+console.log(sumsArray.reduce(getSum));
